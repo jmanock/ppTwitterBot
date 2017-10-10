@@ -3,7 +3,7 @@ var config = require('./config.js');
 var T = new Twitter(config);
 
 var params = {
-  q:'#tittytuesday',
+  q:'#pussy, #nsfw',
   count:10,
   result_type:'recent',
   lang:'en'
@@ -14,7 +14,8 @@ T.get('search/tweets', params, function(err, data, response){
       let id = {id:data.statuses[i].id_str}
       T.post('favorites/create', id, function(err, response){
         if(err){
-          console.log(err[0].message);
+          //console.log(err[0].message);
+          console.log(err);
         }else{
           let username = response.user.screen_name;
           let tweetId = response.id_str;
