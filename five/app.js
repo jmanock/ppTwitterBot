@@ -3,7 +3,7 @@ var config = require('./config.js');
 var T = new Twitter(config);
 
 var params = {
-  q:'#pussy, #nsfw',
+  q:'#masturbate, #nsfw',
   count:10,
   result_type:'recent',
   lang:'en'
