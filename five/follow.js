@@ -4,7 +4,8 @@ var T = new Twitter(config);
 
 var retweet = function(){
   var params = {
-    q:'#boobies',
+    q:'#thong',
+    count:5,
     result_type:'recent',
     lang:'en'
   }
