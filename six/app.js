@@ -29,22 +29,57 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
+app.get('/search', function(req, res){
+
+});
 
 
+// T.stream('statuses/filter', {track:'florida'}, function(stream){
+//   stream.on('data', function(tweet){
+//     console.log(tweet.text);
+//   });
+//   stream.on('error', function(error){
+//     console.log(error);
+//   });
+// });
+var params = {
+  q:'nsfw',
+  result_type:'recent',
+  count:10,
+  lang:'en'
+}
+var something = function(){
+  T.get('search/tweets', params, function(err, data){
+    if(!err){
+      for(var i = 0; i < data.statuses.length; i++){
+        var username = data.statuses[i].user.screen_name;
+        var tweetId = data.statuses[i].id_str;
+        var pic = data.statuses[i].entities.media;
+        if(pic === undefined){
+          console.log('No pic here')
+        }else{
+          for(var x = 0; x < pic.length; x++){
+            var mediaUrl = pic[i].media_url;
+            if(mediaUrl === undefined){
+              console.log('this is not a pic');
+            }else{
+              console.log(mediaUrl);
+            }
 
+          }
+          console.log(`https://twitter.com/${username}/status/${tweetId}`);
+        }
+         //console.log(data.statuses[i].entities.media);
 
-var links =[
-  'https://twitter.com/Matasnet/status/919506462048772096',
-  'https://twitter.com/ChiomaBanks/status/919505996942336000',
-  'https://twitter.com/ANTONYBRADDON/status/919505292232089600',
-  'https://twitter.com/Magidas1/status/919505893238063105',
-  'https://twitter.com/first4edu/status/919507046407593984',
-  'https://twitter.com/gbramwellxo/status/919507092339396609',
-  'https://twitter.com/IAmNotAFakeGirl/status/919505647498137600',
-  'https://twitter.com/Pikagamergirl/status/919506780438319105',
-  'https://twitter.com/Bun_Bun31/status/919505295923204096',
-  'https://twitter.com/Xhakaal/status/919506878387822593'
-];
+      }
+
+    }else{
+      console.log(err);
+    }
+  });
+}
+
+something();
+
 
 module.exports = app;
