@@ -32,58 +32,7 @@ app.use('/', index);
 app.use('/users', users);
 
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-var retweet = function(){
-  var params = {
-    // q:'#nudes, #nsfw',
-    q:'#selfie',
-    count:10,
-    result_type:'recent',
-    lang:'en'
-  }
-  T.get('search/tweets', params, function(err, data, response){
-    var urlz = [];
-    if(!err){
-      for(let i = 0; i < data.statuses.length; i++){
-        let id = {id:data.statuses[i].id_str};
-        T.post('favorites/create', id, function(err, response){
-          if(err){
-            console.log(err);
-          }else{
-            let username = response.user.screen_name;
-            let tweetId = response.id_str;
-            let url = `https://twitter.com/${username}/status/${tweetId}`;
-            // console.log('Favorit: ',url);
-
-            urlz.push(url);
-
-          }
-        });
-      }
-    }else{
-      console.log(err);
-    }
-
-  });
-}
-
-// retweet();
 
 var links =[
   'https://twitter.com/Matasnet/status/919506462048772096',
@@ -97,5 +46,5 @@ var links =[
   'https://twitter.com/Bun_Bun31/status/919505295923204096',
   'https://twitter.com/Xhakaal/status/919506878387822593'
 ];
-res.send(links);
+
 module.exports = app;
